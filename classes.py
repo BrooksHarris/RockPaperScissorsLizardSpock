@@ -7,10 +7,10 @@ class Element:
         self.name = name
         self.betterthan = betterthan
         self.worsethan = worsethan
-        #if len(self.betterthan) != len(self.worsethan):
-        #    raise ElementError("Different amount of betterthans and worsethans.")
-        #if len(self.betterthan)%2 != 0:
-        #    raise ElementError("Odd number of betterthans and worsethans.")
+        if len(self.betterthan) != len(self.worsethan):
+            raise ElementError("Different amount of betterthans and worsethans.")
+        if len(self.betterthan)%2 != 0:
+            raise ElementError("Odd number of betterthans and worsethans.")
     def getBetterThan(self):
         return self.betterthan
     def getWorseThan(self):
@@ -27,10 +27,10 @@ class GameError(Exception):
 
 #names is a list of strings, rankings is a dictionary, where the key is better than the value
 class Game:
-    def __init__(self, names, rankings):
+    def __init__(self, names, b, w):
         self.elements = []
-        better = list(rankings.keys())
-        worse = list(rankings.values())
+        better = b
+        worse = w
         for name in names:
             betterthan = []
             for i in range(len(better)):
@@ -58,9 +58,20 @@ class Game:
         else:
             raise GameError("No relationship between the two elements.")
 
+# "rock":"scissors"
+# "scissors":"paper"
+# "paper":"rock"
+# "spock":"rock"
+# "paper":"spock"
+# "spock":"scissors"
+# "lizard":"spock"
+# "lizard":"paper"
+# "rock":"lizard"
+# "scissors":"lizard"
+
 if __name__ == "__main__":
     import random
-    g = Game(["rock","paper","scissors","lizard","spock"],{"rock":"scissors","scissors":"paper","paper":"rock","spock":"rock","paper":"spock","spock":"scissors","lizard":"spock","lizard":"paper","rock":"lizard","scissors":"lizard"})
+    g = Game(["rock","paper","scissors","lizard","spock"],["rock","scissors","paper","spock","paper","spock","lizard","lizard","rock","scissors"],["scissors","paper","rock","rock","spock","scissors","spock","paper","lizard","lizard"])
     names = g.getNames()
     while True:
         element_input = input("Enter Choice: ")
