@@ -50,8 +50,9 @@ class Game:
         self.elements = []
         better = b
         worse = w
-        tti = TextToImage(names,"hand making the shape of a ")
-        images = tti.generate()
+        if generateImages:
+            tti = TextToImage(names,"hand making the shape of a ")
+            images = tti.generate()
         for name in names:
             betterthan = []
             for i in range(len(better)):
