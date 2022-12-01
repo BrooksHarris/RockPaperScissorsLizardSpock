@@ -1,3 +1,6 @@
+from diffusers import StableDiffusionPipeline
+import torch
+
 class ElementError(Exception):
     pass
 
@@ -25,12 +28,30 @@ class Element:
 class GameError(Exception):
     pass
 
+class TextToImage:
+    def __init__(self,names,prefix):
+        self.names = names
+        self.prefix = prefix
+        model_id = "runwayml/stable-diffusion-v1-5"
+        self.pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16, revision="fp16", use_auth_token="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")
+        self.pipe = self.pipe.to("cuda")
+    def generate(self):
+        images = []
+        with torch.autocast("cuda"):
+            for name in self.names:
+                prompt = self.prefix + name
+                image = self.pipe(prompt).images[0]
+                images.append(image)
+        return images
+
 #names is a list of strings, rankings is a dictionary, where the key is better than the value
 class Game:
-    def __init__(self, names, b, w):
+    def __init__(self, names, b, w, generateImages=False):
         self.elements = []
         better = b
         worse = w
+        tti = TextToImage(names,"hand making the shape of a ")
+        images = tti.generate()
         for name in names:
             betterthan = []
             for i in range(len(better)):
