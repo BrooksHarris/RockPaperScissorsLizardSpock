@@ -20,6 +20,17 @@ g = Game(all_objects,b,w,generateImages=False)
 names = g.getNames()
 while True:
     element_input = input("Enter Choice: ")
+    try:
+        element_input = element_input[0].upper() + element_input[1:].lower()
+    except Exception as e:
+        print("Please input a value.")
+        continue
     element_random = random.choice(names)
-    print("You chose: " + str(element_input) + " and Computer chose: " + str(element_random))
-    print("Winner: " + str(g.whoWins(element_input,element_random)))
+    if element_input == "Exit":
+        break
+    try:
+        winner = g.whoWins(element_input,element_random)
+        print("You chose: " + str(element_input) + " and Computer chose: " + str(element_random))
+        print("Winner: " + str(winner))
+    except Exception as e:
+        print("Bad input. Try again.")
