@@ -7,7 +7,7 @@ w = ["scissors","paper","rock","rock","spock","scissors","spock","paper","lizard
 import os
 import openai
 
-openai.api_key = "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" #os.getenv("OPENAI_API_KEY")
+openai.api_key = input("Paste OpenAI key: ") #os.getenv("OPENAI_API_KEY")
 
 NUMBER_OF_ELEMENTS = 10
 
