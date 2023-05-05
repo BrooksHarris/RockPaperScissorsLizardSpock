@@ -1,4 +1,4 @@
-from diffusers import StableDiffusionPipeline
+#from diffusers import StableDiffusionPipeline
 import torch
 
 class ElementError(Exception):
@@ -33,8 +33,8 @@ class TextToImage:
         self.names = names
         self.prefix = prefix
         model_id = "runwayml/stable-diffusion-v1-5"
-        self.pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16, revision="fp16", use_auth_token="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")
-        self.pipe = self.pipe.to("cuda")
+        #self.pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=torch.float16, revision="fp16", use_auth_token="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")
+        #self.pipe = self.pipe.to("cuda")
     def generate(self):
         images = []
         with torch.autocast("cuda"):
